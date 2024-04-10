@@ -17,6 +17,13 @@ pnpm install
 yarn install
 ```
 
+## database migrate
+
+```bash
+npx prisma generate
+npx prisma migrate deploy 
+```
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:

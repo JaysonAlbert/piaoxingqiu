@@ -1,0 +1,47 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run install
+      run: |
+        npm install
+        
+    - name: Run build
+      run: |
+        npm run build
+
+    - name: Deploy
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        port: ${{ secrets.PORT }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        debug: true
+        source: ".nuxt,.output,prisma "
+        target: /srv/www/ibot
+
+    - name: prisma migrate deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd /srv/www/ibot/
+          npx prisma generate
+          npx prisma migrate deploy 
+          npm install
+          npx pm2 reload ibot || npx pm2 start npm --name "ibot" -- run start

@@ -77,4 +77,9 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  nitro: {
+    routeRules: {
+      '/cyy_gatewayapi/**': { proxy: 'https://m.piaoxingqiu.com:443/cyy_gatewayapi/**' },
+    }
+  },
 })

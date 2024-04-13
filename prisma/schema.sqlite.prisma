@@ -1,0 +1,66 @@
+generator client {
+    provider      = "prisma-client-js"
+    binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id        Int     @id @default(autoincrement())
+    phone     String  @unique
+    nickname  String?
+    avatar    String?
+    bizUserId String
+    mtcUserId String
+
+    Login Login[]
+    Order Order[]
+}
+
+model Login {
+    id           Int      @id @default(autoincrement())
+    user         User     @relation(fields: [userId], references: [id])
+    userId       Int
+    loginTime    DateTime @default(now())
+    smsCode      String
+    accessToken  String
+    refreshToken String
+}
+
+model Order {
+    id                   Int      @id @default(autoincrement())
+    user                 User     @relation(fields: [userId], references: [id])
+    userId               Int
+    loginTime            DateTime @default(now())
+    smsCode              String
+    accessToken          String
+    refreshToken         String
+    seatPlantId          String
+    seatPlanName         String
+    sessionId            String
+    sessionName          String
+    showId               String
+    showName             String
+    ticketPrice          Int
+    qty                  Int
+    receiver             String
+    cellphone            String
+    receiverPhone        String
+    deliverMethod        String
+    identityRequiredType String
+    expressFee           Int
+    audiences          Audience[]
+    addressId            String
+}
+
+model Audience {
+  id         Int     @id @default(autoincrement())
+  audienceId String
+  order      Order   @relation(fields: [orderId], references: [id])
+  orderId    Int
+}
+
+//self, show_id, show_name, session_id, session_name, seat_plan_id, seat_plan_name, price: int, qty: int, deliver_method, identity_required_type, audience_ids: list, express_fee: int, receiver, receiver_phone, address_id

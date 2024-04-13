@@ -8,7 +8,7 @@ module.exports = {
         'plugin:nuxt/recommended',
     ],
     parser: '@typescript-eslint/parser',
-    plugins: ['@typescript-eslint'],
+    plugins: ['@typescript-eslint', 'nuxt'],
     parserOptions: {
         project: true,
         tsconfigRootDir: __dirname,

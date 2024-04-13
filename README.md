@@ -20,8 +20,10 @@ yarn install
 ## database migrate
 
 ```bash
-npx prisma generate
-npx prisma migrate deploy 
+cp .env.example .env
+npx prisma generate --schema=./prisma/schema.sqlite.prisma
+npx prisma migrate dev --schema=./prisma/schema.sqlite.prisma --name init_sqlite
+npx prisma migrate deploy --schema=./prisma/schema.sqlite.prisma
 ```
 
 ## Development Server

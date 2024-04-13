@@ -37,8 +37,8 @@
     </div>
 
     <v-footer class="fixed bottom-0 w-full h-20 bg-grey-lighten-1" style="position: fixed">
-        <div v-if="data.price">
-            {{ data.price * data.count }}
+        <div v-if="data.price" style="color: red;">
+            ¥{{ data.price * data.count }}
         </div>
         <v-btn class="relative right-4 rounded-pill bg-deep-purple-lighten-2" @click="pre_order"
             style="position: absolute">下一步</v-btn>

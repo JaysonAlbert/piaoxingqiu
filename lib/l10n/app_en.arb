@@ -1,0 +1,8 @@
+{
+    "@@locale": "en",
+    "appTitle": "piaoxingqiu",
+    "username": "Login",
+    "usernameHint": "Enter your username",
+    "password": "Password",
+    "passwordHint": "Enter your password"
+}

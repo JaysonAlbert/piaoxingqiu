@@ -1,0 +1,8 @@
+{
+    "@@locale": "zh",
+    "appTitle": "票星球",
+    "username": "用户名",
+    "usernameHint": "请输入用户名",
+    "password": "密码",
+    "passwordHint": "请输入密码"
+}

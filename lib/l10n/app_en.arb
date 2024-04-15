@@ -2,9 +2,11 @@
     "@@locale": "en",
     "appTitle": "piaoxingqiu",
     "username": "Phone Number",
-    "usernameHint": "Enter your username",
+    "phoneInvalid": "Please input a valid phone number",
+    "captcha": "Please input the captcha",
+    "usernameHint": "Enter your phone number",
     "password": "Sms Code",
-    "sendSms": "Send Sms Code",
+    "sendSms": "Send Verification Code",
     "login": "Login",
-    "passwordHint": "Enter your password"
+    "passwordHint": "Enter your verification code"
 }

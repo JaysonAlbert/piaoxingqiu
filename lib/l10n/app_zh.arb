@@ -2,9 +2,11 @@
     "@@locale": "zh",
     "appTitle": "票星球",
     "username": "手机号",
-    "usernameHint": "请输入用户名",
+    "phoneInvalid": "请输入正确的手机号",
+    "captcha": "请输入验证码",
+    "usernameHint": "请输入手机号",
     "password": "验证码",
     "sendSms": "发送验证码",
     "login": "登陆",
-    "passwordHint": "请输入密码"
+    "passwordHint": "请输入验证码"
 }

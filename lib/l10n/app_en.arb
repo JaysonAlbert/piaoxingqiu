@@ -1,8 +1,10 @@
 {
     "@@locale": "en",
     "appTitle": "piaoxingqiu",
-    "username": "Login",
+    "username": "Phone Number",
     "usernameHint": "Enter your username",
-    "password": "Password",
+    "password": "Sms Code",
+    "sendSms": "Send Sms Code",
+    "login": "Login",
     "passwordHint": "Enter your password"
 }

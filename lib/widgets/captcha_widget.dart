@@ -69,6 +69,13 @@ class _CaptchaWidgetState extends State<CaptchaWidget> {
           }
           return localizations.captcha;
         },
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            setState(() {
+              context.read<UserModel>().setPhotoCode(value);
+            });
+          }
+        },
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
             labelText: localizations!.captcha,

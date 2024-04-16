@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:piaoxingqiu/widgets/captcha_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:piaoxingqiu/helpers/exception_helper.dart';
 import '../helpers/validator.dart';
 import '../models/user.dart';
 
@@ -16,15 +16,27 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _phone = TextEditingController();
-  final TextEditingController _password = TextEditingController();
+  final TextEditingController _smsCode = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
-  void _login() {
-    final username = _phone.text;
-    final password = _password.text;
-    print('username: $username, password: $password');
-    context.go('/shows');
+  void _login() async {
+    final userModel = context.read<UserModel>();
+    userModel.setSmsCode(_smsCode.text);
+
+    try {
+      await userModel.login();
+      if (!mounted) return;
+      context.go('/shows');
+    } catch (e) {
+      if (!mounted) return;
+      handleErrors(context, e as Exception);
+    }
+  }
+
+  void _sendVerifySms() {
+    print('sending sms');
+    context.read<UserModel>().sendVerifySms();
   }
 
   void refreshCaptcha() {
@@ -69,7 +81,6 @@ class _LoginPageState extends State<LoginPage> {
                         });
                         return null;
                       }
-                      print('phone invalid');
                       return localizations.phoneInvalid;
                     },
                     keyboardType: TextInputType.phone,
@@ -81,14 +92,14 @@ class _LoginPageState extends State<LoginPage> {
                 CaptchaWidget(),
                 SizedBox(height: 16),
                 TextFormField(
-                    controller: _password,
+                    controller: _smsCode,
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: localizations.passwordHint,
                       border: OutlineInputBorder(),
                       suffixIcon: TextButton(
                         onPressed: () {
-                          print('send sms');
+                          _sendVerifySms();
                         },
                         style: TextButton.styleFrom(
                           iconColor: Theme.of(context).primaryColor,

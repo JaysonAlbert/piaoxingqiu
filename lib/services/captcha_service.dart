@@ -1,15 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:piaoxingqiu/helpers/headers.dart';
-
-import '../models/response.dart';
+import 'package:piaoxingqiu/config/app_config.dart';
+import 'package:piaoxingqiu/models/response.dart';
 
 class CaptchaService {
-  final String baseUrl = 'https://m.piaoxingqiu.com/';
-
   Future<String> generateCaptcha(String phone) async {
     try {
-      print('loading captcha... $phone');
+      String baseUrl = AppConfig.baseUrl;
       final response = await http.post(
           Uri.parse('$baseUrl/cyy_gatewayapi/user/pub/v3/generate_photo_code'),
           body: jsonEncode({

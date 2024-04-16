@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class CaptchaWidget extends StatefulWidget {
-  const CaptchaWidget({Key? key}) : super(key: key);
+  const CaptchaWidget({super.key});
 
   @override
   _CaptchaWidgetState createState() => _CaptchaWidgetState();

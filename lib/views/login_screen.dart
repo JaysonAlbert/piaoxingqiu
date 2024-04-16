@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:piaoxingqiu/widgets/captcha_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 
 import '../helpers/validator.dart';
 import '../models/user.dart';
@@ -23,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
     final username = _phone.text;
     final password = _password.text;
     print('username: $username, password: $password');
+    context.go('/shows');
   }
 
   void refreshCaptcha() {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:piaoxingqiu/models/user.dart';
+import 'package:piaoxingqiu/views/shows_screen.dart';
 import 'dart:core';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -16,6 +17,7 @@ final _router = GoRouter(
         child: const LoginPage(),
       ),
     ),
+    GoRoute(path: '/shows', builder: (context, state) => const ShowsPage())
   ],
 );
 

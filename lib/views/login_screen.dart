@@ -17,13 +17,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _phone = TextEditingController();
-  final TextEditingController _smsCode = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
   void _login() async {
     final userModel = context.read<UserModel>();
-    userModel.setSmsCode(_smsCode.text);
 
     try {
       await userModel.login();
@@ -92,22 +90,6 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 16),
                 CaptchaWidget(),
                 SizedBox(height: 16),
-                // TextFormField(
-                //     controller: _smsCode,
-                //     obscureText: true,
-                //     decoration: InputDecoration(
-                //       labelText: localizations.passwordHint,
-                //       border: OutlineInputBorder(),
-                //       suffixIcon: TextButton(
-                //         onPressed: () {
-                //           _sendVerifySms();
-                //         },
-                //         style: TextButton.styleFrom(
-                //           iconColor: Theme.of(context).primaryColor,
-                //         ),
-                //         child: Text(localizations.sendSms),
-                //       ),
-                //     )),
                 SmsCodeField(),
                 SizedBox(height: 16),
                 Center(

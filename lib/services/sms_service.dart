@@ -24,7 +24,6 @@ class SmsService {
         body: jsonEncode(req),
         headers: createHeaders(null));
 
-    print(response.body);
     Response<bool> data = Response.fromJson(jsonDecode(response.body));
     print(data.toString());
     if (data.statusCode == 200 && data.data == true) {

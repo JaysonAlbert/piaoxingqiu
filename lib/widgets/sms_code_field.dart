@@ -63,6 +63,7 @@ class _SmsCodeFieldState extends State<SmsCodeField> {
     return TextFormField(
       controller: _smsCode,
       obscureText: true,
+      onChanged: (value) => context.read<UserModel>().smsCode = value,
       decoration: InputDecoration(
         labelText:
             localizations!.passwordHint, // Replace with your localization

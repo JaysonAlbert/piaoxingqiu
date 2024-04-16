@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:piaoxingqiu/services/shared_prefrences_service.dart';
 
 import 'package:piaoxingqiu/services/sms_service.dart';
 import 'package:piaoxingqiu/services/user_service.dart';
@@ -10,8 +11,9 @@ class UserModel extends ChangeNotifier {
   String accessToken = '';
   String refreshToken = '';
 
-  void setPhone(String phone) {
+  void setPhone(String phone) async {
     this.phone = phone;
+    (await SharedPreferencesService.getInstance()).setPhone(phone);
     notifyListeners();
   }
 
@@ -36,8 +38,14 @@ class UserModel extends ChangeNotifier {
     print('username: $phone, smsCode: $smsCode');
     if (phone.isEmpty || smsCode.isEmpty) return false;
     Map<String, dynamic> res = await UserService().login(phone, smsCode);
+
     accessToken = res['accessToken'];
     refreshToken = res['refreshToken'];
+    final sharedPreferencesService =
+        await SharedPreferencesService.getInstance();
+    await sharedPreferencesService.setAccessToken(accessToken);
+    await sharedPreferencesService.setRefreshToken(refreshToken);
+
     print(toString());
     notifyListeners();
     return true;

@@ -39,6 +39,7 @@ class UserModel extends ChangeNotifier {
     accessToken = res['accessToken'];
     refreshToken = res['refreshToken'];
     print(toString());
+    notifyListeners();
     return true;
   }
 

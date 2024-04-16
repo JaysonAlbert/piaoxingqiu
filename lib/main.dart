@@ -12,10 +12,7 @@ final _router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => ChangeNotifierProvider(
-        create: (context) => UserModel(),
-        child: const LoginPage(),
-      ),
+      builder: (context, state) => const LoginPage(),
     ),
     GoRoute(path: '/shows', builder: (context, state) => const ShowsPage())
   ],
@@ -31,14 +28,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _router,
-      title: 'Flutter Demo',
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
+    return ChangeNotifierProvider(
+      create: (context) => UserModel(),
+      child: MaterialApp.router(
+        routerConfig: _router,
+        title: 'piaoxingqiu',
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
+        ),
       ),
     );
   }

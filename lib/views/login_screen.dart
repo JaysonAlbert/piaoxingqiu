@@ -4,8 +4,9 @@ import 'package:piaoxingqiu/widgets/captcha_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:piaoxingqiu/helpers/exception_helper.dart';
-import '../helpers/validator.dart';
-import '../models/user.dart';
+import 'package:piaoxingqiu/helpers/validator.dart';
+import 'package:piaoxingqiu/models/user.dart';
+import 'package:piaoxingqiu/widgets/sms_code_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -91,22 +92,23 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 16),
                 CaptchaWidget(),
                 SizedBox(height: 16),
-                TextFormField(
-                    controller: _smsCode,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: localizations.passwordHint,
-                      border: OutlineInputBorder(),
-                      suffixIcon: TextButton(
-                        onPressed: () {
-                          _sendVerifySms();
-                        },
-                        style: TextButton.styleFrom(
-                          iconColor: Theme.of(context).primaryColor,
-                        ),
-                        child: Text(localizations.sendSms),
-                      ),
-                    )),
+                // TextFormField(
+                //     controller: _smsCode,
+                //     obscureText: true,
+                //     decoration: InputDecoration(
+                //       labelText: localizations.passwordHint,
+                //       border: OutlineInputBorder(),
+                //       suffixIcon: TextButton(
+                //         onPressed: () {
+                //           _sendVerifySms();
+                //         },
+                //         style: TextButton.styleFrom(
+                //           iconColor: Theme.of(context).primaryColor,
+                //         ),
+                //         child: Text(localizations.sendSms),
+                //       ),
+                //     )),
+                SmsCodeField(),
                 SizedBox(height: 16),
                 Center(
                     child: Row(

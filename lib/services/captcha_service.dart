@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:piaoxingqiu/helpers/headers.dart';
 
-import '../models/Response.dart';
+import '../models/response.dart';
 
 class CaptchaService {
   final String baseUrl = 'https://m.piaoxingqiu.com/';

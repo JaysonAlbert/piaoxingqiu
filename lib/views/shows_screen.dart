@@ -42,8 +42,12 @@ class ShowsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double containerWidth = screenWidth * 0.7;
+
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
+      width: containerWidth,
       child: Center(
         child: ListView.builder(
           itemCount: 20,

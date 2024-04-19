@@ -8,5 +8,6 @@
     "password": "Sms Code",
     "sendSms": "Send Verification Code",
     "login": "Login",
-    "passwordHint": "Enter your verification code"
+    "passwordHint": "Enter your verification code",
+    "search": "search"
 }

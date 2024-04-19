@@ -8,5 +8,6 @@
     "password": "验证码",
     "sendSms": "发送验证码",
     "login": "登陆",
-    "passwordHint": "请输入验证码"
+    "passwordHint": "请输入验证码",
+    "search": "搜索"
 }

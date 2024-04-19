@@ -119,7 +119,7 @@ class Price extends StatelessWidget {
   });
 
   String _price(showData) {
-    final priceInfo = showData['minOriginalPriceInfo']! as Map<String, String>;
+    final priceInfo = showData['minOriginalPriceInfo']! as Map<String, dynamic>;
     return '${priceInfo['prefix']}${priceInfo['yuanNum']}';
   }
 

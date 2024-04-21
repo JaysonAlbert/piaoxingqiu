@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:piaoxingqiu/models/show.dart';
 
 class ShowCardWidget extends StatelessWidget {
   ShowCardWidget({super.key, required this.showData});
 
-  final Map<String, dynamic> showData;
+  final ShowData showData;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class ShowCardWidget extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
-              child: Poster(showData: showData),
+              child: Poster(posterUrl: showData.posterUrl),
             ),
             SizedBox(
               height: 200,
@@ -43,10 +44,10 @@ class ShowCardWidget extends StatelessWidget {
 class Poster extends StatelessWidget {
   const Poster({
     super.key,
-    required this.showData,
+    required this.posterUrl,
   });
 
-  final Map<String, dynamic> showData;
+  final String posterUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class Poster extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
       ),
       child: CachedNetworkImage(
-          imageUrl: showData['posterUrl'] as String,
+          imageUrl: posterUrl,
           placeholder: (context, url) => CircularProgressIndicator(),
           errorWidget: (context, url, error) => Icon(Icons.error),
           imageBuilder: (context, imageProvider) => ClipRRect(
@@ -78,7 +79,7 @@ class ShowTitle extends StatelessWidget {
     required this.showData,
   });
 
-  final Map<String, dynamic> showData;
+  final ShowData showData;
 
   @override
   Widget build(BuildContext context) {
@@ -86,21 +87,21 @@ class ShowTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          showData['showName'] as String,
+          showData.showName,
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              showData['showDate'] as String,
+              showData.showDate,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  '${showData['cityName'] as String}|${showData['venueName'] as String}',
+                  '${showData.cityName}|${showData.venueName}',
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ],
@@ -119,11 +120,11 @@ class Price extends StatelessWidget {
   });
 
   String _price(showData) {
-    final priceInfo = showData['minOriginalPriceInfo']! as Map<String, dynamic>;
-    return '${priceInfo['prefix']}${priceInfo['yuanNum']}';
+    final priceInfo = showData.minOriginalPriceInfo;
+    return '${priceInfo.prefix}${priceInfo.yuanNum}';
   }
 
-  final Map<String, dynamic> showData;
+  final ShowData showData;
 
   @override
   Widget build(BuildContext context) {

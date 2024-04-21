@@ -28,37 +28,25 @@ class _ShowsPageState extends State<ShowsPage> {
     _onSearch("");
   }
 
+  Widget _buildScrollable(BuildContext context) {
+    return CustomScrollView(slivers: [
+      SearchBarSliverAppBar(
+        onSearch: _onSearch,
+      ),
+      SliverList(
+          delegate: SliverChildBuilderDelegate((context, index) {
+        return Center(
+          child: ShowCardWidget(showData: showDataList[index]),
+        );
+      }, childCount: showDataList.length))
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double containerWidth = screenWidth * 0.7;
 
     return Scaffold(
-      body: Center(
-        child: Container(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          width: containerWidth,
-          child: Center(
-            child: Column(
-              children: [
-                SearchBarWidget(onSearch: _onSearch),
-                Expanded(
-                  child: Center(
-                    child: ListView.builder(
-                      itemCount: showDataList.length,
-                      itemBuilder: (context, index) {
-                        return Center(
-                            child:
-                                ShowCardWidget(showData: showDataList[index]));
-                      },
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
+      body: _buildScrollable(context),
     );
   }
 }

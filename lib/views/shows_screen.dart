@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:piaoxingqiu/models/show.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:piaoxingqiu/widgets/show_card_widget.dart';
 import 'package:piaoxingqiu/widgets/search_bar_widget.dart';
@@ -70,8 +71,14 @@ class _ShowsPageState extends State<ShowsPage> {
       ),
       SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
-        return Center(
-          child: ShowCardWidget(showData: showDataList[index]),
+        return InkWell(
+          onTap: () {
+            print('go to page show id: ${showDataList[index].showId}');
+            context.go('/show/${showDataList[index].showId}');
+          },
+          child: Center(
+            child: ShowCardWidget(showData: showDataList[index]),
+          ),
         );
       }, childCount: showDataList.length))
     ]);

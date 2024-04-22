@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:piaoxingqiu/models/user.dart';
 import 'package:piaoxingqiu/services/shared_prefrences_service.dart';
 import 'package:piaoxingqiu/views/shows_screen.dart';
+import 'package:piaoxingqiu/views/show_detail_screen.dart';
 import 'dart:core';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -15,23 +16,31 @@ final _router = GoRouter(
       path: '/login',
       builder: (context, state) => const LoginPage(),
     ),
-    GoRoute(path: '/shows', builder: (context, state) => const ShowsPage())
+    GoRoute(
+      path: '/shows',
+      builder: (context, state) => const ShowsPage(),
+    ),
+    GoRoute(
+        path: '/show/:id',
+        builder: (context, state) {
+          var showId = state.pathParameters['id']!;
+          return ShowDetailPage(showId: showId);
+        })
   ],
   redirect: (context, state) async {
-    print('checking login status');
     final isLoggedIn = (await SharedPreferencesService.getInstance()).isLogin;
-    print('routing path ${state.uri.path} ${state.path}');
-    print(
-        'shared preference accessToken: ${(await SharedPreferencesService.getInstance()).accessToken}');
-    print(
-        'shared preference refreshToken: ${(await SharedPreferencesService.getInstance()).refreshToken}');
-    print(
-        'shared preference phone: ${(await SharedPreferencesService.getInstance()).phone}');
     final goingToLogin = state.path == '/login';
 
     if (!isLoggedIn && !goingToLogin) return '/login';
+    if (isLoggedIn && goingToLogin) {
+      return '/shows'; // Redirect logged in users trying to access login page
+    }
 
-    return "/shows";
+    if (state.matchedLocation == '/') {
+      return '/shows';
+    }
+
+    return null;
   },
 );
 

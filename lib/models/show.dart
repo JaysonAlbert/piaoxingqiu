@@ -138,3 +138,189 @@ class PageShowData {
     );
   }
 }
+
+class ShowDetail {
+  final BasicInfo basicInfo;
+  final AdditionalInfo additionalInfo;
+
+  ShowDetail({required this.basicInfo, required this.additionalInfo});
+
+  factory ShowDetail.fromJson(Map<String, dynamic> json) {
+    return ShowDetail(
+      basicInfo: BasicInfo.fromJson(json['basicInfo']),
+      additionalInfo: AdditionalInfo.fromJson(json['additionalInfo']),
+    );
+  }
+}
+
+class BasicInfo {
+  bool hotMode;
+  String stdShowId;
+  String showName;
+  String sourceType;
+  String originalSeatPickType;
+  String contentUrl;
+  String posterUrl;
+  String posterColor;
+  String venueId;
+  String venueName;
+  String venueAddress;
+  double venueLat;
+  double venueLng;
+  String cityId;
+  String cityName;
+  int onSaleShowCount;
+  List<dynamic> showTags;
+  String authorizationUrl;
+  PriceInfo minOriginalPriceInfo;
+  PriceInfo maxOriginalPriceInfo;
+  String showDate;
+  String showDuration;
+  String? seatPlanURL;
+  bool displayAdvance;
+  bool venueDisplayAdvance;
+  bool sessionDisplayAdvance;
+  bool seatPlanDisplayAdvance;
+  ShowType showType;
+  String showDetailStatus;
+  bool existsPrivilegePurchase;
+  bool displayCountdownTime;
+  List<dynamic> captchaTypes;
+
+  BasicInfo({
+    required this.hotMode,
+    required this.stdShowId,
+    required this.showName,
+    required this.sourceType,
+    required this.originalSeatPickType,
+    required this.contentUrl,
+    required this.posterUrl,
+    required this.posterColor,
+    required this.venueId,
+    required this.venueName,
+    required this.venueAddress,
+    required this.venueLat,
+    required this.venueLng,
+    required this.cityId,
+    required this.cityName,
+    required this.onSaleShowCount,
+    required this.showTags,
+    this.authorizationUrl = "",
+    required this.minOriginalPriceInfo,
+    required this.maxOriginalPriceInfo,
+    required this.showDate,
+    required this.showDuration,
+    required this.seatPlanURL,
+    required this.displayAdvance,
+    required this.venueDisplayAdvance,
+    required this.sessionDisplayAdvance,
+    required this.seatPlanDisplayAdvance,
+    required this.showType,
+    required this.showDetailStatus,
+    required this.existsPrivilegePurchase,
+    required this.displayCountdownTime,
+    required this.captchaTypes,
+  });
+
+  factory BasicInfo.fromJson(Map<String, dynamic> json) => BasicInfo(
+        hotMode: json['hotMode'],
+        stdShowId: json['stdShowId'],
+        showName: json['showName'],
+        sourceType: json['sourceType'],
+        originalSeatPickType: json['originalSeatPickType'],
+        contentUrl: json['contentUrl'],
+        posterUrl: json['posterUrl'],
+        posterColor: json['posterColor'],
+        venueId: json['venueId'],
+        venueName: json['venueName'],
+        venueAddress: json['venueAddress'],
+        venueLat: json['venueLat'].toDouble(),
+        venueLng: json['venueLng'].toDouble(),
+        cityId: json['cityId'],
+        cityName: json['cityName'],
+        onSaleShowCount: json['onSaleShowCount'],
+        showTags: json['showTags'],
+        authorizationUrl: json['authorizationUrl'] ?? "",
+        minOriginalPriceInfo: PriceInfo.fromJson(json['minOriginalPriceInfo']),
+        maxOriginalPriceInfo: PriceInfo.fromJson(json['maxOriginalPriceInfo']),
+        showDate: json['showDate'],
+        showDuration: json['showDuration'],
+        seatPlanURL: json['seatPlanURL'],
+        displayAdvance: json['displayAdvance'],
+        venueDisplayAdvance: json['venueDisplayAdvance'],
+        sessionDisplayAdvance: json['sessionDisplayAdvance'],
+        seatPlanDisplayAdvance: json['seatPlanDisplayAdvance'],
+        showType: ShowType.fromJson(json['showType']),
+        showDetailStatus: json['showDetailStatus'],
+        existsPrivilegePurchase: json['existsPrivilegePurchase'],
+        displayCountdownTime: json['displayCountdownTime'],
+        captchaTypes: json['captchaTypes'],
+      );
+}
+
+class PriceInfo {
+  String yuanNum;
+  String centNum;
+  String suffix;
+  String prefix;
+
+  PriceInfo({
+    required this.yuanNum,
+    this.centNum = "",
+    this.suffix = "",
+    this.prefix = "￥",
+  });
+
+  factory PriceInfo.fromJson(Map<String, dynamic> json) => PriceInfo(
+        yuanNum: json['yuanNum'],
+        centNum: json['centNum'] ?? "",
+        suffix: json['suffix'] ?? "",
+        prefix: json['prefix'],
+      );
+}
+
+class ShowType {
+  String name;
+
+  ShowType({required this.name});
+
+  factory ShowType.fromJson(Map<String, dynamic> json) => ShowType(
+        name: json['name'],
+      );
+}
+
+class AdditionalInfo {
+  bool hasCoupon;
+  bool hasPromo;
+  bool hasUserPromo;
+  bool hasPCard;
+  bool hasPriority;
+  bool hasChannelDiscount;
+  bool checkChannelFreeCombo;
+  bool channelPickSeatProject;
+  bool hasTyingSale;
+
+  AdditionalInfo({
+    required this.hasCoupon,
+    required this.hasPromo,
+    required this.hasUserPromo,
+    required this.hasPCard,
+    required this.hasPriority,
+    required this.hasChannelDiscount,
+    required this.checkChannelFreeCombo,
+    required this.channelPickSeatProject,
+    required this.hasTyingSale,
+  });
+
+  factory AdditionalInfo.fromJson(Map<String, dynamic> json) => AdditionalInfo(
+        hasCoupon: json['hasCoupon'],
+        hasPromo: json['hasPromo'],
+        hasUserPromo: json['hasUserPromo'],
+        hasPCard: json['hasPCard'],
+        hasPriority: json['hasPriority'],
+        hasChannelDiscount: json['hasChannelDiscount'],
+        checkChannelFreeCombo: json['checkChannelFreeCombo'],
+        channelPickSeatProject: json['channelPickSeatProject'],
+        hasTyingSale: json['hasTyingSale'],
+      );
+}

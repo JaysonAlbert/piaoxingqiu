@@ -9,5 +9,7 @@
     "sendSms": "Send Verification Code",
     "login": "Login",
     "passwordHint": "Enter your verification code",
-    "search": "search"
+    "search": "search",
+    "my": "My",
+    "home": "Shows"
 }

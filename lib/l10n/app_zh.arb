@@ -9,5 +9,7 @@
     "sendSms": "发送验证码",
     "login": "登陆",
     "passwordHint": "请输入验证码",
-    "search": "搜索"
+    "search": "搜索",
+    "my": "我的",
+    "home": "演出"
 }

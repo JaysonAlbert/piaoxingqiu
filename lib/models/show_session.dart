@@ -83,20 +83,20 @@ class ShowSession {
 
 class SeatPlan {
   String seatPlanId;
-  String stdSeatPlanId;
-  String colorValue;
+  String? stdSeatPlanId;
+  String? colorValue;
   double originalPrice;
   String seatPlanName;
-  int displayOrder;
+  int? displayOrder;
   int limitation;
-  bool hasActivity;
-  String seatPlanCategory;
+  bool? hasActivity;
+  String? seatPlanCategory;
   bool isCombo;
-  List<String> saleTags;
-  List<String> promoTags;
-  String whiteRuleId;
-  List<String> whiteTags;
-  List<dynamic> items; // Adjust type based on actual item structure
+  List<String>? saleTags;
+  List<String>? promoTags;
+  String? whiteRuleId;
+  List<String>? whiteTags;
+  List<dynamic>? items; // Adjust type based on actual item structure
 
   SeatPlan({
     required this.seatPlanId,

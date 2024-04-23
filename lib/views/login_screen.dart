@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await userModel.login();
       if (!mounted) return;
-      context.go('/shows');
+      context.go('/show');
     } catch (e) {
       if (!mounted) return;
       handleErrors(context, e as Exception);

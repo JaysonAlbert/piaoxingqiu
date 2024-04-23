@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:piaoxingqiu/widgets/show_card_widget.dart';
 import 'package:piaoxingqiu/widgets/search_bar_widget.dart';
 import 'package:piaoxingqiu/services/show_service.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ShowsPage extends StatefulWidget {
   const ShowsPage({super.key});
@@ -87,34 +86,8 @@ class _ShowsPageState extends State<ShowsPage> {
 
   @override
   Widget build(BuildContext context) {
-    int currentPageIndex = 0;
-    var localizations = AppLocalizations.of(context);
-
     return Scaffold(
       body: _buildScrollable(context),
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        indicatorColor: Colors.amber,
-        selectedIndex: currentPageIndex,
-        destinations: <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: localizations!.home,
-          ),
-          NavigationDestination(
-            icon: Badge(
-              label: Text('2'),
-              child: Icon(Icons.person),
-            ),
-            label: localizations.my,
-          ),
-        ],
-      ),
     );
   }
 }

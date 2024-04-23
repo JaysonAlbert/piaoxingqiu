@@ -4,28 +4,49 @@ import 'package:piaoxingqiu/models/user.dart';
 import 'package:piaoxingqiu/services/shared_prefrences_service.dart';
 import 'package:piaoxingqiu/views/shows_screen.dart';
 import 'package:piaoxingqiu/views/show_detail_screen.dart';
+import 'package:piaoxingqiu/views/user_profile_screen.dart';
 import 'dart:core';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 
 import 'views/login_screen.dart';
 
+final GlobalKey<NavigatorState> _rootNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'root');
+final GlobalKey<NavigatorState> _shellNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'shell');
+
 final _router = GoRouter(
+  navigatorKey: _rootNavigatorKey,
+  debugLogDiagnostics: true,
   routes: [
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginPage(),
     ),
-    GoRoute(
-      path: '/shows',
-      builder: (context, state) => const ShowsPage(),
-    ),
-    GoRoute(
-        path: '/show/:id',
-        builder: (context, state) {
-          var showId = state.pathParameters['id']!;
-          return ShowDetailPage(showId: showId);
-        })
+    ShellRoute(
+        navigatorKey: _shellNavigatorKey,
+        builder: (context, state, child) {
+          return ScaffoldWithNavBar(child: child);
+        },
+        routes: [
+          GoRoute(
+              path: '/show',
+              builder: (context, state) => const ShowsPage(),
+              routes: [
+                GoRoute(
+                    path: ':id',
+                    parentNavigatorKey: _rootNavigatorKey,
+                    builder: (context, state) {
+                      var showId = state.pathParameters['id']!;
+                      return ShowDetailPage(showId: showId);
+                    }),
+              ]),
+          GoRoute(
+            path: '/my',
+            builder: (context, state) => UserProfilePage(),
+          ),
+        ]),
   ],
   redirect: (context, state) async {
     final isLoggedIn = (await SharedPreferencesService.getInstance()).isLogin;
@@ -33,11 +54,11 @@ final _router = GoRouter(
 
     if (!isLoggedIn && !goingToLogin) return '/login';
     if (isLoggedIn && goingToLogin) {
-      return '/shows'; // Redirect logged in users trying to access login page
+      return '/show'; // Redirect logged in users trying to access login page
     }
 
     if (state.matchedLocation == '/') {
-      return '/shows';
+      return '/show';
     }
 
     return null;
@@ -71,5 +92,43 @@ class MyApp extends StatelessWidget {
             ))),
       ),
     );
+  }
+}
+
+class ScaffoldWithNavBar extends StatelessWidget {
+  final Widget child;
+
+  const ScaffoldWithNavBar({required this.child, Key? key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: child,
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (v) => _onDestinationSelected(v, context),
+          destinations: [
+            NavigationDestination(
+              icon: Icon(Icons.home),
+              label: AppLocalizations.of(context)!.home,
+              selectedIcon: Icon(Icons.home_outlined),
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.person),
+              label: AppLocalizations.of(context)!.my,
+              selectedIcon: Icon(Icons.person_outlined),
+            )
+          ],
+        ));
+  }
+
+  void _onDestinationSelected(int destination, BuildContext context) {
+    switch (destination) {
+      case 0:
+        GoRouter.of(context).go('/shows');
+      case 1:
+        GoRouter.of(context).go('/my');
+      default:
+        GoRouter.of(context).go('/shows');
+    }
   }
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:piaoxingqiu/models/order.dart';
 import 'package:piaoxingqiu/models/user.dart';
 import 'package:piaoxingqiu/services/shared_prefrences_service.dart';
 import 'package:piaoxingqiu/views/shows_screen.dart';
 import 'package:piaoxingqiu/views/show_detail_screen.dart';
 import 'package:piaoxingqiu/views/user_profile_screen.dart';
+import 'package:piaoxingqiu/views/order_screen.dart';
 import 'dart:core';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -47,6 +49,14 @@ final _router = GoRouter(
             builder: (context, state) => UserProfilePage(),
           ),
         ]),
+    GoRoute(
+        path: '/order/confirm',
+        builder: (context, state) {
+          OrderConfig orderConfig = state.extra! as OrderConfig;
+          return OrderScreen(
+            orderConfig: orderConfig,
+          );
+        })
   ],
   redirect: (context, state) async {
     final isLoggedIn = (await SharedPreferencesService.getInstance()).isLogin;

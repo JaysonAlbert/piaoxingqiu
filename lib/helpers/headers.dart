@@ -18,7 +18,7 @@ const specialHeader = {
 Map<String, String> createHeaders(accessToken) {
   var headers = Map<String, String>.from(defaultHeader);
   if (accessToken != null) {
-    headers['accesstoken'] = accessToken;
+    headers['access-token'] = accessToken;
   }
 
   if (!kIsWeb) {

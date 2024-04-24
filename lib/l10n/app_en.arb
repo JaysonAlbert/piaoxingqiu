@@ -11,5 +11,6 @@
     "passwordHint": "Enter your verification code",
     "search": "search",
     "my": "My",
-    "home": "Shows"
+    "home": "Shows",
+    "orderConfirm": "Order Confirm"
 }

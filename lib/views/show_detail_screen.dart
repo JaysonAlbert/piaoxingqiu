@@ -2,9 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+
+import 'package:piaoxingqiu/models/order.dart';
 import 'package:piaoxingqiu/models/show_session.dart';
 import 'package:piaoxingqiu/services/show_service.dart';
 import '../models/show.dart';
+
+import 'package:go_router/go_router.dart';
 
 class ShowDetailPage extends StatefulWidget {
   final String showId;
@@ -50,36 +55,16 @@ class _ShowDetailPageState extends State<ShowDetailPage> {
         body: Center(child: CircularProgressIndicator()),
       );
     } else {
-      return Scaffold(
-        appBar: AppBar(title: Text(_showDetail!.basicInfo.showName)),
-        body: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Text('场次',
-                    style:
-                        TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-              ),
-            ),
-            SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-              return ListTile(
-                title: Text(_showSessionList![index].sessionName),
-                selected: index == _selectedSessionIndex,
-                onTap: () {
-                  setState(() {
-                    _selectedSessionIndex = index;
-                    _selectedSeatPlanIndex = -1;
-                  });
-                },
-              );
-            }, childCount: _showSessionList!.length)),
-            if (_selectedSessionIndex != -1) ...[
+      return ChangeNotifierProvider(
+        create: (context) => OrderConfig(showId: widget.showId),
+        builder: (context, child) => Scaffold(
+          appBar: AppBar(title: Text(_showDetail!.basicInfo.showName)),
+          body: CustomScrollView(
+            slivers: [
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.all(16),
-                  child: Text('票价',
+                  child: Text('场次',
                       style:
                           TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                 ),
@@ -87,49 +72,84 @@ class _ShowDetailPageState extends State<ShowDetailPage> {
               SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
                 return ListTile(
-                    selected: index == _selectedSeatPlanIndex,
-                    title: Text(_showSessionList![_selectedSessionIndex]
-                        .seatPlans[index]
-                        .seatPlanName),
-                    onTap: () {
-                      setState(() {
-                        _selectedSeatPlanIndex = index;
-                      });
+                  title: Text(_showSessionList![index].sessionName),
+                  selected: index == _selectedSessionIndex,
+                  onTap: () {
+                    setState(() {
+                      _selectedSessionIndex = index;
+                      _selectedSeatPlanIndex = -1;
                     });
-              },
-                      childCount: _showSessionList![_selectedSessionIndex]
-                          .seatPlans
-                          .length)),
-            ],
-          ],
-        ),
-        bottomNavigationBar: BottomAppBar(
-          height: _selectedSessionIndex != -1 && _selectedSeatPlanIndex != -1
-              ? 130
-              : 56,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (_selectedSessionIndex != -1 && _selectedSeatPlanIndex != -1)
-                PriceCalculator(
-                    seatPlan: _showSessionList![_selectedSessionIndex]
-                        .seatPlans[_selectedSeatPlanIndex]),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(400, 40),
+                    Provider.of<OrderConfig>(context, listen: false)
+                        .setSessionId(
+                            _showSessionList![index].bizShowSessionId);
+                  },
+                );
+              }, childCount: _showSessionList!.length)),
+              if (_selectedSessionIndex != -1) ...[
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Text('票价',
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold)),
+                  ),
                 ),
-                onPressed: _toOrder,
-                child: Text("下一步"),
-              )
+                SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                  return ListTile(
+                      selected: index == _selectedSeatPlanIndex,
+                      title: Text(_showSessionList![_selectedSessionIndex]
+                          .seatPlans[index]
+                          .seatPlanName),
+                      onTap: () {
+                        setState(() {
+                          _selectedSeatPlanIndex = index;
+                        });
+                        var seatPlan = _showSessionList![_selectedSessionIndex]
+                            .seatPlans[index];
+                        OrderConfig orderConfig =
+                            Provider.of<OrderConfig>(context, listen: false);
+                        orderConfig.setSeatPlanId(
+                          seatPlan.seatPlanId,
+                        );
+                        orderConfig.setPrice(seatPlan.originalPrice.toInt());
+                      });
+                },
+                        childCount: _showSessionList![_selectedSessionIndex]
+                            .seatPlans
+                            .length)),
+              ],
             ],
+          ),
+          bottomNavigationBar: BottomAppBar(
+            height: _selectedSessionIndex != -1 && _selectedSeatPlanIndex != -1
+                ? 130
+                : 56,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (_selectedSessionIndex != -1 && _selectedSeatPlanIndex != -1)
+                  PriceCalculator(
+                      seatPlan: _showSessionList![_selectedSessionIndex]
+                          .seatPlans[_selectedSeatPlanIndex]),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(400, 40),
+                  ),
+                  onPressed: () => _toOrder(context),
+                  child: Text("下一步"),
+                )
+              ],
+            ),
           ),
         ),
       );
     }
   }
 
-  void _toOrder() {
-    print('to order');
+  void _toOrder(context) {
+    OrderConfig orderConfig = Provider.of<OrderConfig>(context, listen: false);
+    GoRouter.of(context).push('/order/confirm', extra: orderConfig);
   }
 }
 
@@ -146,10 +166,9 @@ class PriceCalculator extends StatefulWidget {
 }
 
 class _PriceCalculatorState extends State<PriceCalculator> {
-  int ticketCount = 1;
-
   @override
   Widget build(BuildContext context) {
+    OrderConfig orderConfig = Provider.of<OrderConfig>(context);
     return SizedBox(
       height: 70,
       child: Padding(
@@ -160,7 +179,7 @@ class _PriceCalculatorState extends State<PriceCalculator> {
             Column(
               children: [
                 Text(
-                  '￥${ticketCount * widget.seatPlan.originalPrice}',
+                  '￥${orderConfig.qty * widget.seatPlan.originalPrice}',
                   style: TextStyle(color: Colors.red),
                 ),
                 Row(
@@ -180,9 +199,9 @@ class _PriceCalculatorState extends State<PriceCalculator> {
                 InkWell(
                   customBorder: CircleBorder(),
                   onTap: () {
-                    if (ticketCount > 1) {
+                    if (orderConfig.qty > 1) {
                       setState(() {
-                        ticketCount--;
+                        orderConfig.minusQty();
                       });
                     }
                   },
@@ -193,15 +212,15 @@ class _PriceCalculatorState extends State<PriceCalculator> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   child: Text(
-                    '$ticketCount',
+                    '${orderConfig.qty}',
                   ),
                 ),
                 InkWell(
                   customBorder: CircleBorder(),
                   onTap: () {
-                    if (ticketCount < widget.seatPlan.limitation) {
+                    if (orderConfig.qty < widget.seatPlan.limitation) {
                       setState(() {
-                        ticketCount++;
+                        orderConfig.addQty();
                       });
                     }
                   },

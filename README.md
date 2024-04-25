@@ -1,16 +1,13 @@
 # piaoxingqiu
 
-A new Flutter project.
+使用flutter开发的模拟票星球的跨平台app
 
-## Getting Started
+目前仍在早期开发阶段，功能有限。
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 功能列表
+- [x] 登录
+- [x] 演唱会列表
+- [x] 演唱会详情
+- [ ] 预下单
+- [ ] 个人信息
+- [ ] 余票通知

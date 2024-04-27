@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void handleErrors(BuildContext context, Exception exception) {
+void handleErrors(BuildContext context, dynamic exception) {
   String message = exception.toString();
 
   final snackBar = SnackBar(

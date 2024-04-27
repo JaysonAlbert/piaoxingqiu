@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:piaoxingqiu/helpers/logger.dart';
 import 'package:piaoxingqiu/widgets/captcha_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -29,12 +30,12 @@ class _LoginPageState extends State<LoginPage> {
       context.go('/show');
     } catch (e) {
       if (!mounted) return;
-      handleErrors(context, e as Exception);
+      handleErrors(context, e );
     }
   }
 
   void _sendVerifySms() {
-    print('sending sms');
+    logError('sending sms');
     context.read<UserModel>().sendVerifySms();
   }
 

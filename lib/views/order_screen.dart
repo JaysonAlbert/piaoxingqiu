@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:piaoxingqiu/models/order.dart';
 import 'package:piaoxingqiu/services/user_service.dart';
 import 'package:piaoxingqiu/helpers/exception_helper.dart';
 import 'package:piaoxingqiu/widgets/show_card_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:piaoxingqiu/helpers/logger.dart';
 
 class OrderScreen extends StatefulWidget {
   final OrderConfig orderConfig;
@@ -31,10 +33,10 @@ class _OrderScreenState extends State<OrderScreen> {
       setState(() {
         _preOrderResult = result;
       });
-    } catch (e) {
+    } catch (e, stack) {
       if (!mounted) return;
-      print(e);
-      Future.microtask(() => handleErrors(context, e as Exception));
+      logError("pre order failed", e, stack);
+      Future.microtask(() => handleErrors(context, e));
     }
   }
 
@@ -49,12 +51,31 @@ class _OrderScreenState extends State<OrderScreen> {
       );
     } else {
       return Scaffold(
-        appBar: AppBar(title: Text(localizations!.orderConfirm)),
-        body: Center(
-            child: Poster(
-          posterUrl: _preOrderResult!.shows[0].poster!,
-        )),
-      );
+          appBar: AppBar(title: Text(localizations!.orderConfirm)),
+          body: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Poster(
+                      posterUrl: _preOrderResult!.shows[0].poster!,
+                    ),
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            _preOrderResult!.shows[0].showName,
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                          Text(_preOrderResult!.shows[0].cityName +
+                              _preOrderResult!.shows[0].venue.venueName),
+                        ])
+                  ],
+                ),
+              )
+            ],
+          ));
     }
   }
 }

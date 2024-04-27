@@ -6,6 +6,7 @@ import 'package:piaoxingqiu/services/captcha_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:provider/provider.dart';
+import 'package:piaoxingqiu/helpers/logger.dart';
 
 class CaptchaWidget extends StatefulWidget {
   const CaptchaWidget({super.key});
@@ -35,8 +36,8 @@ class _CaptchaWidgetState extends State<CaptchaWidget> {
       setState(() {
         _captchaBase64 = captcha;
       });
-    } catch (e) {
-      print('Failed to load captcha: $e');
+    } catch (e, stack) {
+      logError('Failed to load captcha: ', e, stack);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Failed to load captcha'),
         backgroundColor: Colors.red,

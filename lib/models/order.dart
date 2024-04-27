@@ -188,6 +188,11 @@ class Show {
   bool? preSale;
   String? preSaleShowDesc;
   List<ShowNote>? showNotes;
+   String cityName;
+  String showTimeDesc;
+  List<Session>? showSessions;
+  List<SupportDiscount>? supportDiscounts;
+  Venue venue;
 
   Show({
     required this.showId,
@@ -197,6 +202,11 @@ class Show {
     required this.preSale,
     required this.preSaleShowDesc,
     required this.showNotes,
+    required this.cityName,
+    required this.showTimeDesc,
+    required this.showSessions,
+    required this.supportDiscounts,
+    required this.venue,
   });
 
   factory Show.fromJson(Map<String, dynamic> json) => Show(
@@ -210,7 +220,17 @@ class Show {
             ? null
             : List<ShowNote>.from(
                 json["showNotes"].map((x) => ShowNote.fromJson(x))),
-        // Other fields...
+        cityName: json['cityName'],
+        showTimeDesc: json['showTimeDesc'],
+        showSessions: json['showSessions'] == null
+            ? null
+            : List<Session>.from(
+                json['showSessions'].map((x) => Session.fromJson(x))),
+        supportDiscounts: json['supportDiscounts'] == null
+            ? null
+            : List<SupportDiscount>.from(json['supportDiscounts']
+                .map((x) => SupportDiscount.fromJson(x))),
+        venue: Venue.fromJson(json['venue']),
       );
 }
 
@@ -238,6 +258,34 @@ class ShowNote {
             ? null
             : RefundCfg.fromJson(json['refundCfg']),
       );
+}
+
+class Venue {
+  final String venueId;
+  final String venueName;
+  final String venueAddress;
+
+  Venue({
+    required this.venueId,
+    required this.venueName,
+    required this.venueAddress,
+  });
+
+  factory Venue.fromJson(Map<String, dynamic> json) {
+    return Venue(
+      venueId: json['venueId'],
+      venueName: json['venueName'],
+      venueAddress: json['venueAddress'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'venueId': venueId,
+      'venueName': venueName,
+      'venueAddress': venueAddress,
+    };
+  }
 }
 
 class RefundCfg {
@@ -410,9 +458,9 @@ class IdentityShow {
 class Session {
   String sessionId;
   String sessionName;
-  String identityRequiredType;
+  String? identityRequiredType;
   List<String>? identityTypeList;
-  int audienceNum;
+  int? audienceNum;
   List<SeatPlanAgeLimit>? seatPlanAgeLimits;
 
   Session({

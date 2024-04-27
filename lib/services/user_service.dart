@@ -8,6 +8,7 @@ import 'package:piaoxingqiu/models/order.dart';
 import 'dart:math' as math;
 
 import 'package:piaoxingqiu/services/shared_prefrences_service.dart';
+import 'package:piaoxingqiu/helpers/logger.dart';
 
 class UserService {
   String baseUrl = AppConfig.baseUrl;
@@ -32,7 +33,7 @@ class UserService {
 
     Response<Map<String, dynamic>> data =
         Response.fromJson(jsonDecode(response.body));
-    print(data.toString());
+    logError(data.toString());
     if (data.statusCode == 200 && data.data != null) {
       return data.data!;
     }
@@ -102,7 +103,9 @@ class UserService {
 
     if (responseBody.statusCode == 200) {
       return PreOrderResult.fromJson(responseBody.data!);
-    } else if (responseBody.statusCode == 15012007 && !isRetry) {
+    } else if ((responseBody.statusCode == 15012007 ||
+            responseBody.statusCode == 15012010) &&
+        !isRetry) {
       refreshToken();
       return perOrder(orderConfig, isRetry: true);
     } else {

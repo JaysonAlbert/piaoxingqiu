@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:piaoxingqiu/models/user.dart';
+import 'package:piaoxingqiu/helpers/logger.dart';
 
 class SmsCodeField extends StatefulWidget {
   @override
@@ -23,7 +24,7 @@ class _SmsCodeFieldState extends State<SmsCodeField> {
   }
 
   void _sendVerifySms() {
-    print('sending sms');
+    logError('sending sms');
     context.read<UserModel>().sendVerifySms();
     setState(() {
       _hasClicked = true;

@@ -3,6 +3,7 @@ import 'package:piaoxingqiu/services/shared_prefrences_service.dart';
 
 import 'package:piaoxingqiu/services/sms_service.dart';
 import 'package:piaoxingqiu/services/user_service.dart';
+import 'package:piaoxingqiu/helpers/logger.dart';
 
 class UserModel extends ChangeNotifier {
   String phone = '';
@@ -30,12 +31,12 @@ class UserModel extends ChangeNotifier {
   Future<bool> sendVerifySms() async {
     if (phone.isEmpty || photoCode.isEmpty) return false;
     await SmsService().sendVerifyCode(phone, photoCode);
-    print('sms msg send to $phone, code is $photoCode');
+    logError('sms msg send to $phone, code is $photoCode');
     return true;
   }
 
   Future<bool> login() async {
-    print('username: $phone, smsCode: $smsCode');
+    logError('username: $phone, smsCode: $smsCode');
     if (phone.isEmpty || smsCode.isEmpty) return false;
     Map<String, dynamic> res = await UserService().login(phone, smsCode);
 
@@ -46,7 +47,7 @@ class UserModel extends ChangeNotifier {
     await sharedPreferencesService.setAccessToken(accessToken);
     await sharedPreferencesService.setRefreshToken(refreshToken);
 
-    print(toString());
+    logError(toString());
     notifyListeners();
     return true;
   }

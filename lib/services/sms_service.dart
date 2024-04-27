@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:piaoxingqiu/helpers/headers.dart';
 import 'package:piaoxingqiu/models/response.dart';
 import 'package:piaoxingqiu/config/app_config.dart';
+import 'package:piaoxingqiu/helpers/logger.dart';
 
 class SmsService {
   Future<void> sendVerifyCode(String phone, String photoCode) async {
@@ -25,7 +26,7 @@ class SmsService {
         headers: createHeaders(null));
 
     Response<bool> data = Response.fromJson(jsonDecode(response.body));
-    print(data.toString());
+    logError(data.toString());
     if (data.statusCode == 200 && data.data == true) {
       return;
     }

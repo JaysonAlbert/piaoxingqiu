@@ -12,6 +12,7 @@ import 'dart:convert';
 
 import 'package:piaoxingqiu/main.dart';
 import 'package:piaoxingqiu/models/order.dart';
+import 'package:piaoxingqiu/helpers/logger.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -38,6 +39,6 @@ void main() {
     String jsonStr = await file.readAsString();
     var json = jsonDecode(jsonStr);
     PreOrderResult result = PreOrderResult.fromJson(json);
-    print(result.toString());    
+    logError(result.toString());    
   });
 }

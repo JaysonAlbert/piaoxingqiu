@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:piaoxingqiu/widgets/show_card_widget.dart';
 import 'package:piaoxingqiu/widgets/search_bar_widget.dart';
 import 'package:piaoxingqiu/services/show_service.dart';
+import 'package:piaoxingqiu/helpers/logger.dart';
 
 class ShowsPage extends StatefulWidget {
   const ShowsPage({super.key});
@@ -32,7 +33,7 @@ class _ShowsPageState extends State<ShowsPage> {
     });
     var shows =
         await ShowService().getShows(keyword: search, pageNo: currentPage);
-    print('search: $search, num: ${shows.showData.length}');
+    logError('search: $search, num: ${shows.showData.length}');
     setState(() {
       showDataList.addAll(shows.showData);
       hasMoreData = shows.pagination.hasNextPage;
@@ -60,7 +61,7 @@ class _ShowsPageState extends State<ShowsPage> {
     setState(() {
       currentPage += 1;
     });
-    print('load more items: $currentPage');
+    logError('load more items: $currentPage');
     _onSearch(currentSearch);
   }
 
@@ -73,7 +74,7 @@ class _ShowsPageState extends State<ShowsPage> {
           delegate: SliverChildBuilderDelegate((context, index) {
         return InkWell(
           onTap: () {
-            print('go to page show id: ${showDataList[index].showId}');
+            logError('go to page show id: ${showDataList[index].showId}');
             context.go('/show/${showDataList[index].showId}');
           },
           child: Center(

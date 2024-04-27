@@ -63,7 +63,7 @@ class Poster extends StatelessWidget {
                 child: Image(
                   image: ResizeImage(
                     imageProvider,
-                    height: 150,
+                    height: 200,
                   ),
                 ),
               )),

@@ -102,7 +102,9 @@ class UserService {
 
     if (responseBody.statusCode == 200) {
       return PreOrderResult.fromJson(responseBody.data!);
-    } else if (responseBody.statusCode == 15012007 && !isRetry) {
+    } else if ((responseBody.statusCode == 15012007 ||
+            responseBody.statusCode == 15012009) &&
+        !isRetry) {
       refreshToken();
       return perOrder(orderConfig, isRetry: true);
     } else {

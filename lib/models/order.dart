@@ -40,6 +40,15 @@ class OrderConfig extends ChangeNotifier {
     notifyListeners();
   }
 
+  factory OrderConfig.fromJson(Map<String, dynamic> json) {
+    OrderConfig orderConfig = OrderConfig(showId: json['showId']);
+    orderConfig.sessionId = json['sessionId'];
+    orderConfig.seatPlanId = json['seatPlanId'];
+    orderConfig.price = json['price'];
+    orderConfig.qty = json['qty'];
+    return orderConfig;
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'showId': showId,
@@ -188,7 +197,7 @@ class Show {
   bool? preSale;
   String? preSaleShowDesc;
   List<ShowNote>? showNotes;
-   String cityName;
+  String cityName;
   String showTimeDesc;
   List<Session>? showSessions;
   List<SupportDiscount>? supportDiscounts;

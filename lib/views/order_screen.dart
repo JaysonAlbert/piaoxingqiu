@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -56,13 +57,13 @@ class _OrderScreenState extends State<OrderScreen> {
             slivers: [
               SliverToBoxAdapter(
                 child: Row(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Poster(
                       posterUrl: _preOrderResult!.shows[0].poster!,
                     ),
                     Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
                             _preOrderResult!.shows[0].showName,

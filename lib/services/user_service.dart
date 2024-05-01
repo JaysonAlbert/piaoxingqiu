@@ -83,7 +83,7 @@ class UserService {
             "skuType": "SINGLE",
             "ticketPrice": orderConfig.price,
             "qty": orderConfig.qty,
-            "ticketItems": _getTicketItems(orderConfig.qty)
+            "ticketItems": _getTicketItems(orderConfig.qty!)
           },
           "spu": {
             "showId": orderConfig.showId,
@@ -109,6 +109,7 @@ class UserService {
       refreshToken();
       return perOrder(orderConfig, isRetry: true);
     } else {
+      logError(responseBody.comments);
       throw Exception(responseBody.comments);
     }
   }

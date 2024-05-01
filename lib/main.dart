@@ -52,7 +52,8 @@ final _router = GoRouter(
     GoRoute(
         path: '/order/confirm',
         builder: (context, state) {
-          OrderConfig orderConfig = state.extra! as OrderConfig;
+          OrderConfig orderConfig =
+              OrderConfig.fromJson(state.extra! as Map<String, dynamic>);
           return OrderScreen(
             orderConfig: orderConfig,
           );

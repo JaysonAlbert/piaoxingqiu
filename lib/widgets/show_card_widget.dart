@@ -23,8 +23,7 @@ class ShowCardWidget extends StatelessWidget {
               child: Poster(posterUrl: showData.posterUrl),
             ),
             SizedBox(
-              height: 200,
-              width: 600,
+              width: 800,
               child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,7 +63,6 @@ class Poster extends StatelessWidget {
                 child: Image(
                   image: ResizeImage(
                     imageProvider,
-                    width: 150,
                     height: 200,
                   ),
                 ),

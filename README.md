@@ -13,3 +13,21 @@
 - [ ] 添加观影人
 - [ ] 个人信息
 - [ ] 余票通知
+
+
+## 启动
+由于目前仍在开发中，仅提供开发模型下的启动方法
+
+### 环境安装
+1. 安装好flutter环境，vscode
+2. vscode安装flutter插件
+
+### windows模式启动
+
+vscode直接启动windows模式
+
+### web模式启动
+1. 安装nginx
+2. 将`deployment/nginx/flutter_nginx.conf`中的配置添加到nginx中
+3. vscode启动web模式
+4. 浏览器打开http://localhost

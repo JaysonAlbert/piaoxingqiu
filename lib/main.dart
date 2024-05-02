@@ -135,11 +135,11 @@ class ScaffoldWithNavBar extends StatelessWidget {
   void _onDestinationSelected(int destination, BuildContext context) {
     switch (destination) {
       case 0:
-        GoRouter.of(context).go('/shows');
+        GoRouter.of(context).go('/show');
       case 1:
         GoRouter.of(context).go('/my');
       default:
-        GoRouter.of(context).go('/shows');
+        GoRouter.of(context).go('/show');
     }
   }
 }

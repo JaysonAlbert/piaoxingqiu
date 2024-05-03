@@ -23,9 +23,9 @@ class ShowCardWidget extends StatelessWidget {
               child: Poster(posterUrl: showData.posterUrl),
             ),
             SizedBox(
+              height: 180,
               width: 800,
               child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -51,6 +51,7 @@ class Poster extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 200,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
       ),

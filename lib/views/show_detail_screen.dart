@@ -179,7 +179,7 @@ class _PriceCalculatorState extends State<PriceCalculator> {
             Column(
               children: [
                 Text(
-                  '￥${orderConfig.qty! * widget.seatPlan.originalPrice}',
+                  '￥${orderConfig.qty * widget.seatPlan.originalPrice}',
                   style: TextStyle(color: Colors.red),
                 ),
                 Row(
@@ -199,7 +199,7 @@ class _PriceCalculatorState extends State<PriceCalculator> {
                 InkWell(
                   customBorder: CircleBorder(),
                   onTap: () {
-                    if (orderConfig.qty! > 1) {
+                    if (orderConfig.qty > 1) {
                       setState(() {
                         orderConfig.minusQty();
                       });
@@ -218,7 +218,7 @@ class _PriceCalculatorState extends State<PriceCalculator> {
                 InkWell(
                   customBorder: CircleBorder(),
                   onTap: () {
-                    if (orderConfig.qty! < widget.seatPlan.limitation) {
+                    if (orderConfig.qty < widget.seatPlan.limitation) {
                       setState(() {
                         orderConfig.addQty();
                       });

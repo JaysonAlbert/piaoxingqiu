@@ -95,7 +95,6 @@ class MyApp extends StatelessWidget {
         supportedLocales: AppLocalizations.supportedLocales,
         theme: ThemeData(
             useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
             textTheme: TextTheme(
                 headlineSmall: TextStyle(
               fontSize: 18.0,

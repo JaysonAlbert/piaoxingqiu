@@ -66,6 +66,21 @@ class UserService {
     }
   }
 
+  void addAudience(AudienceReq audienceReq) async {
+    String url = "$baseUrl/cyy_gatewayapi/user/buyer/v4/user_audiences";
+    var headers = PrivilegeService().getHeaders();
+    var response = await http.post(Uri.parse(url),
+        headers: headers, body: jsonEncode(audienceReq.toJson()));
+    Response<Map<String, dynamic>> responseBody =
+        Response.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+    if (responseBody.statusCode == 200) {
+      return;
+    } else {
+      logError(responseBody.comments);
+      throw Exception(responseBody.comments);
+    }
+  }
+
   Future<PreOrderResult> perOrder(OrderConfig orderConfig,
       {isRetry = false}) async {
     String baseUrl = AppConfig.baseUrl;

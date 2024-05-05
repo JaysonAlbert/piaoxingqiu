@@ -12,5 +12,10 @@
     "search": "search",
     "my": "My",
     "home": "Shows",
-    "orderConfirm": "Order Confirm"
+    "orderConfirm": "Order Confirm",
+    "audienceAddTitle": "Add Audience",
+    "nameHint": "Please input your name",
+    "idHint": "Please input your id",
+    "idInvalid": "Please input correct id number",
+    "nameInvalid":"Please input correct name"
 }

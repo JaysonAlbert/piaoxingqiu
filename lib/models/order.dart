@@ -375,6 +375,31 @@ class TimeRange {
       );
 }
 
+class AudienceReq {
+  String bizCode = "FHL_M";
+  String idNo;
+  String idType = "ID_CARD";
+  String name;
+  String src = "WEB";
+  String ver = "4.4.2";
+
+  AudienceReq({
+    required this.idNo,
+    required this.name,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'bizCode': bizCode,
+      'idNo': idNo,
+      'idType': idType,
+      'name': name,
+      'src': src,
+      'ver': ver,
+    };
+  }
+}
+
 class Audience {
   String id;
   String idNo;

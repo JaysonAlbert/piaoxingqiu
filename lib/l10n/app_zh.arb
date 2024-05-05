@@ -12,5 +12,10 @@
     "search": "搜索",
     "my": "我的",
     "home": "演出",
-    "orderConfirm": "确认下单"
+    "orderConfirm": "确认下单",
+    "audienceAddTitle": "新增观演/赛人",
+    "nameHint": "请输入姓名",
+    "idHint": "请输入证件号",
+    "idInvalid": "请输入正确的证件号",
+    "nameInvalid": "请输入正确的姓名"
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:piaoxingqiu/models/order.dart';
+import 'package:go_router/go_router.dart';
 
 class AudienceListWdiget extends StatefulWidget {
   final List<Audience> audiences;
@@ -31,7 +32,9 @@ class _AudienceListWdigetState extends State<AudienceListWdiget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [Text("实名观演/赛人"), Text("已选中0/1位，入场时需携带对应证件")],
                 ),
-                TextButton(onPressed: () => {print("111")}, child: Text("添加"))
+                TextButton(
+                    onPressed: () => {context.push("/audience/add")},
+                    child: Text("添加"))
               ],
             ),
             SizedBox(

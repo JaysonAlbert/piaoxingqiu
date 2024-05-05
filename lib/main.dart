@@ -7,6 +7,7 @@ import 'package:piaoxingqiu/views/shows_screen.dart';
 import 'package:piaoxingqiu/views/show_detail_screen.dart';
 import 'package:piaoxingqiu/views/user_profile_screen.dart';
 import 'package:piaoxingqiu/views/order_screen.dart';
+import 'package:piaoxingqiu/views/audience_add_screen.dart';
 import 'dart:core';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -57,6 +58,11 @@ final _router = GoRouter(
           return OrderScreen(
             orderConfig: orderConfig,
           );
+        }),
+    GoRoute(
+        path: '/audience/add',
+        builder: (context, state) {
+          return AudienceAddScreen();
         })
   ],
   redirect: (context, state) async {

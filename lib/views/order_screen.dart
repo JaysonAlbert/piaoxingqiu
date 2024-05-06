@@ -107,7 +107,9 @@ class _OrderScreenState extends State<OrderScreen> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8.0, 4, 4, 8),
                     child: AudienceListWdiget(
-                        audiences: _preOrderResult!.audiences),
+                      audiences: _preOrderResult!.audiences,
+                      maxAudience: widget.orderConfig.qty,
+                    ),
                   )
                 ],
               ),

@@ -81,6 +81,24 @@ class UserService {
     }
   }
 
+  Future<List<Audience>> getAudiences() async {
+    String url =
+        "$baseUrl/cyy_gatewayapi/user/buyer/v3/user_audiences?idTypes=ID_CARD,PASSPORT,MAINLAND_TRAVEL_PERMIT_TAIWAN,MAINLAND_TRAVEL_PERMIT_HK_MC&length=50&offset=0&src=WEB&ver=4.4.2";
+    var headers = PrivilegeService().getHeaders();
+    var response = await http.get(Uri.parse(url), headers: headers);
+
+    Response<List<dynamic>> responseBody =
+        Response.fromJson(jsonDecode(response.body));
+    if (responseBody.statusCode == 200) {
+      return responseBody.data!
+          .map((e) => Audience.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } else {
+      logError(responseBody.comments);
+      throw Exception(responseBody.comments);
+    }
+  }
+
   Future<PreOrderResult> perOrder(OrderConfig orderConfig,
       {isRetry = false}) async {
     String baseUrl = AppConfig.baseUrl;
